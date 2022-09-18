@@ -1,5 +1,5 @@
 import { readFileSync } from "fs";
-import { FileReaderInterface } from "./file-reader-interface";
+import { FileReaderInterface } from "./file-reader-interface.js";
 
 export default class FileReaderTSV implements FileReaderInterface {
     private rawData = '';
@@ -32,7 +32,7 @@ video,
 actors,
 producer,
 length,
-comments,
+comments: Number.parseInt(comments,10),
 comment: {text,userRating,postDate,user},
 poster,
 background,
