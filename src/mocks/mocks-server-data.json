@@ -1,0 +1,117 @@
+
+{
+    "api": {
+    "titles": [
+        "Дедпул",
+        "Пила",
+        "Джанго Освобождённый",
+        "Титаник",
+        "Полный Расколбас"
+    ],
+    "descriptions": [
+        "Уэйд Уилсон — наёмник. Будучи побочным продуктом программы вооружённых сил...",
+        "Двое незнакомцев просыпаются в странном подвальном помещении. В центре...",
+        "Эксцентричный охотник за головами, также известный как «Дантист», промышляет отстрелом самых опасных преступников на Диком Западе...",
+        "Молодые влюбленные Джек и Роза находят друг друга в первом и последнем плавании «непотопляемого» Титаника. Они не могли знать, что...",
+        "Первая анимационная комедия для взрослых о невероятных приключениях еды из супермаркета."
+    ],
+    "dates": [
+        "17.09.2021",
+        "9.03.2017",
+        "31.12.2020",
+        "01.01.2001",
+        "20.07.2013"
+    ],
+    "genres": [
+        "Thriller",
+        "Horror",
+        "Western",
+        "Drama",
+        "Comedy"
+    ],
+    "releases": [
+        "11.02.2016",
+        "13.05.2021",
+        "17.01.2013",
+        "19.12.1997",
+        "11.08.2016"
+    ],
+    "ratings": [
+        "5",
+        "4",
+        "3",
+        "2",
+        "1"
+    ],
+    "previews": [
+        "firstPreview.jpg",
+        "secondPreview.jpg",
+        "thirdPreview.jpg",
+        "fourthPreview.jpg",
+        "fifthPreview.jpg"
+    ],
+    "videos": [
+        "firstVideo.mp4",
+        "secondVideo.mp4",
+        "thirdVideo.mp4",
+        "fourthVideo.mp4",
+        "fifthVideo.mp4"
+    ],
+    "actors": [
+        "Rayan Gosling",
+        "George",
+        "Jake",
+        "Rambo",
+        "Nikita"
+    ],
+    "producers": [
+        "Vanya",
+        "Petya",
+        "Roberto",
+        "Vladislav",
+        "Ivanov"
+    ],
+    "lengths": [
+        "1:09:11",
+        "2:11:59",
+        "58:01",
+        "1:30:00",
+        "1:49:37"
+    ],
+    "comments": [
+        "15",
+        "10",
+        "13",
+        "3",
+        "7"
+    ],
+    "users": [
+        "qwerty12345",
+        "rtjieigotrj",
+        "Hello World",
+        "EL Papa",
+        "Dwayne Johnson"
+    ],
+    "posters": [
+        "firstPoster.jpg",
+        "secondPoster.jpg",
+        "thirdPoster.jpg",
+        "fourthPoster.jpg",
+        "fifthPoster.jpg"
+    ],
+    "backgrounds": [
+        "firstBackground.jpg",
+        "secondBackground.jpg",
+        "thirdBackground.jpg",
+        "fourthBackground.jpg",
+        "fifthBackground.jpg"
+    ],
+    "colors": [
+        "black",
+        "white",
+        "blue",
+        "yellow",
+        "green"
+        ]
+      }
+    }
