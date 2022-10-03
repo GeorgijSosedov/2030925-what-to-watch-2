@@ -5,7 +5,7 @@ import { createFilm } from "../utils/common.js";
 import { getErrorMessage } from "../utils/get-error-message.js";
 
 export default class ImportCommand implements CliCommandInterface {
-    public readonly name = '--import'
+    public readonly name = '--import';
     private onLine(line: string) {
         const film = createFilm(line)
         console.log(film)
