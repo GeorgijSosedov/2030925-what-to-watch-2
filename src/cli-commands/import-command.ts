@@ -15,6 +15,9 @@ export default class ImportCommand implements CliCommandInterface {
     }
     public execute(filename: string): void {
         const fileReader = new FileReaderTSV(filename.trim())
+
+        fileReader.on('line',this.onLine)
+        fileReader.on('line', this.onComplete)
         try {
             fileReader.read()
             } catch (err) {
