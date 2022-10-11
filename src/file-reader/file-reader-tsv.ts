@@ -21,17 +21,14 @@ export default class FileReaderTSV extends EventEmitter implements FileReaderInt
         lineRead += chunk.toString();
 
         while ((endLinePosition = lineRead.indexOf('/n')) >= 0) {
-            const completeRow = lineRead.slice(0,endLinePosition + 1);
-            lineRead = lineRead.slice(++endLinePosition);
-            importedRowCount++;
+            const completeRow = lineRead.slice(0,endLinePosition + 1)
+            lineRead = lineRead.slice(++endLinePosition,importedRowCount++)
 
             this.emit('line',completeRow)
         }
     }
     }
 }
-
-
 
 
 
