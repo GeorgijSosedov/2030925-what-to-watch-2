@@ -9,4 +9,6 @@
 .DS_Store
 coverage
 *.log
-./mongodb
+*.env
+/mongodb/
+/upload/
