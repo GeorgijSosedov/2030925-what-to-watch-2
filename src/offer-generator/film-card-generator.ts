@@ -1,8 +1,7 @@
-
 import dayjs from "dayjs";
 import { generateRandomValue, getRandomItem } from "../utils/random.js";
-import { MockData } from "../types/mock-data.type";
-import { FilmGeneratorInterface } from "./film-generator.interface";
+import { MockData } from "../types/mock-data.type.js";
+import { FilmGeneratorInterface } from "./film-generator.interface.js";
 
 const FIRST_WEEK_DAY = 1
 const LAST_WEEK_DAY = 7
