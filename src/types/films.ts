@@ -1,10 +1,11 @@
 import { User } from "./users.js"
+import { Genre } from "./genres-type.js"
 
 export type Film = {
 title: string
 description: string
 date: Date
-genre: string
+genre: Genre
 release: string
 rating: string
 preview: string,

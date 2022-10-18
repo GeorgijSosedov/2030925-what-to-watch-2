@@ -1,7 +1,6 @@
-import { Film } from "../types/films";
-import { User } from "../types/users";
+import { User } from "../../types/users.js"
 
-export class FilmEntity implements Film {
+export default class CreateFilmDTO {
 public title!: string
 public description!: string
 public date!: Date
@@ -13,7 +12,7 @@ public video!: string
 public actors!: string
 public producer!: string
 public length!: string
-public comments!: string
+public comments!: number
 public user!: User
 public poster!: string
 public background!: string
