@@ -20,7 +20,7 @@ public async create(dto: createFilmDto): Promise<DocumentType<FilmEntity>> {
     return result
 }
 
-public async findByGenre(genre: string): Promise<DocumentType<FilmEntity> | null> {
-    return this.filmModel.findById(genre).exec();
+public async findById(filmId: string): Promise<DocumentType<FilmEntity> | null> {
+    return this.filmModel.findById(filmId).exec();
     }
 }

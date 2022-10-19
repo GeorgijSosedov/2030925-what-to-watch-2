@@ -13,7 +13,7 @@ video: string,
 actors: string
 producer: string
 length: string
-comments: string
+commentsCount: string
 user: User
 poster: string
 background: string

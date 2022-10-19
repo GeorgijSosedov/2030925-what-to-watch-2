@@ -1,14 +1,14 @@
-export type Genre = [
-        'comedy',
-        'crime ',
-        'documentary',
-        'drama',
-        'horror',
-        'family',
-        'romance',
-        'scifi',
-        'thriller'
-]
+export enum Genre  {
+comedy,
+crime,
+documentary,
+drama,
+horror,
+family,
+romance,
+scifi,
+thriller
+};
 
 
 

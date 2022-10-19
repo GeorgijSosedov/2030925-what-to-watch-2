@@ -1,7 +1,8 @@
-import typegoose,{ defaultClasses, getModelForClass } from "@typegoose/typegoose";
+import typegoose,{ defaultClasses, getModelForClass, Ref } from "@typegoose/typegoose";
 import { Film } from "../../types/films.js";
 import { Genre } from "../../types/genres-type.js";
 import { User } from "../../types/users.js";
+import { UserEntity } from "../user/user.entity.js";
 
 const {prop, modelOptions} = typegoose
 
@@ -20,7 +21,10 @@ public title!: string
 public description!: string
 @prop()
 public date!: Date
-@prop()
+@prop({
+    type : () => String,
+    enum: Genre
+})
 public genre!: Genre
 @prop()
 public release!: string
@@ -37,15 +41,20 @@ public producer!: string
 @prop()
 public length!: string
 @prop({default: 0})
-public comments!: string
+public commentsCount!: string
 @prop()
 public user!: User
 @prop()
 public poster!: string
-@prop({required: true})
+@prop()
 public background!: string
-@prop({required: true})
+@prop()
 public color!: string
+@prop({
+    ref: UserEntity,
+    required: true
+})
+public userId!: Ref<UserEntity>
 }
 
 export const FilmModel = getModelForClass(FilmEntity)

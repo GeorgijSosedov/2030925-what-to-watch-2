@@ -13,6 +13,7 @@ export default class UserService implements UserServiceInterface {
         @inject(Component.LoggerInterface) private logger : LoggerInterface,
         @inject(Component.UserModel) private readonly userModel : types.ModelType<UserEntity>
     ) {}
+    
     public async create(dto: CreateUserDTO,salt: string): Promise<DocumentType<UserEntity>>{
         const user = new UserEntity(dto);
         user.setPassword(dto.password,salt)

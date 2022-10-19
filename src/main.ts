@@ -15,6 +15,9 @@ import FilmService from './modules/film/film-service.js'
 import { types } from '@typegoose/typegoose'
 import { UserEntity, UserModel } from './modules/user/user.entity.js'
 import { FilmEntity, FilmModel } from './modules/film/film.entity.js'
+import { CommentServiceInterface } from './modules/comment/comment-service.interface.js'
+import CommentService from './modules/comment/comment-service.js'
+import { CommentEntity, CommentModel } from './modules/comment/comment.entity.js'
 
 const applicationContainer = new Container();
 applicationContainer.bind<LoggerApplication>(Component.LoggerApplication).to(LoggerApplication).inSingletonScope();
@@ -23,8 +26,10 @@ applicationContainer.bind<ConfigInterface>(Component.ConfigInterface).to(Config)
 applicationContainer.bind<DatabaseInterface>(Component.DatabaseInterface).to(Database).inSingletonScope();
 applicationContainer.bind<UserServiceInterface>(Component.UserServiceInterface).to(UserService).inSingletonScope()
 applicationContainer.bind<FilmServiceInterface>(Component.FilmServiceInterface).to(FilmService).inSingletonScope()
+applicationContainer.bind<CommentServiceInterface>(Component.CommentServiceInterface).to(CommentService).inSingletonScope()
 applicationContainer.bind<types.ModelType<UserEntity>>(Component.UserModel).toConstantValue(UserModel)
 applicationContainer.bind<types.ModelType<FilmEntity>>(Component.FilmModel).toConstantValue(FilmModel)
+applicationContainer.bind<types.ModelType<CommentEntity>>(Component.CommentModel).toConstantValue(CommentModel)
 
 const application = applicationContainer.get<LoggerApplication>(Component.LoggerApplication);
 await application.init()

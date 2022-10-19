@@ -1,6 +1,5 @@
 import FileReaderTSV from "../file-reader/file-reader-tsv.js";
 import { CliCommandInterface } from "./cli-command.interface.js";
-import chalk from "chalk";
 import { createFilm } from "../utils/common.js";
 import { getErrorMessage } from "../utils/get-error-message.js";
 import { UserServiceInterface } from "../modules/user/user-service.interface.js";
@@ -17,7 +16,7 @@ import { getURI } from "../utils/db.js";
 import Database from "../database-client/database.js";
 
 const DEFAULT_DB_PORT = 27017
-const DEFAULT_USER_PASSWORD = 123456
+const DEFAULT_USER_PASSWORD = '123456'
 
 export default class ImportCommand implements CliCommandInterface {
     public readonly name = '--import';
@@ -26,10 +25,7 @@ export default class ImportCommand implements CliCommandInterface {
     private databaseService!: DatabaseInterface
     private logger!: LoggerInterface
     private salt!: string
-    private onLine(line: string) {
-        const film = createFilm(line)
-        console.log(film)
-    }
+
     constructor() {
         this.onLine = this.onLine.bind(this)
         this.onComplete = this.onComplete.bind(this)
@@ -41,22 +37,17 @@ export default class ImportCommand implements CliCommandInterface {
     }
 
     private async saveFilm(film: Film) {
-        const genres = [];
         const user = await this.userService.findOrCreate({
           ...film.user,
           password: DEFAULT_USER_PASSWORD
         }, this.salt);
     
-        for (const {name} of film.genres) {
-          const existGenre = await this.filmService.findByCategoryNameOrCreate(name, {name});
-          genres.push(existGenre.id);
-        }
     
-        await this.filmService.create({
-          ...film,
-          genres
+    await this.filmService.create({
+        ...film,
+        userId: user.id,
         });
-      };
+    }
 
     private async onLine(line: string, resolve: () => void) {
         const film = createFilm(line);
