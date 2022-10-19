@@ -41,7 +41,7 @@ public producer!: string
 @prop()
 public length!: string
 @prop({default: 0})
-public commentsCount!: string
+public commentsCount!: number
 @prop()
 public user!: User
 @prop()

@@ -1,4 +1,4 @@
-export enum Genre  {
+export enum Genre {
 comedy,
 crime,
 documentary,
@@ -8,7 +8,9 @@ family,
 romance,
 scifi,
 thriller
-};
+} 
+
+
 
 
 

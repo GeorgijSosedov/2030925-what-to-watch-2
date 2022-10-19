@@ -3,7 +3,7 @@ import { DocumentType } from "@typegoose/typegoose/lib/types.js";
 import { inject, injectable } from "inversify";
 import { LoggerInterface } from "../../logger/logger-interface.js";
 import { Component } from "../../types/component.types.js";
-import CreateUserDTO from "../dto/create-user.dto.js";
+import CreateUserDTO from "./dto/create-user.dto.js";
 import { UserServiceInterface } from "./user-service.interface.js";
 import { UserEntity } from "./user.entity.js";
 
@@ -24,6 +24,11 @@ export default class UserService implements UserServiceInterface {
     return result
     }
     
+    public async findById(userId: string): Promise<DocumentType<UserEntity> | null> {
+        return this.userModel.findById(userId).exec();
+        }
+    
+
     public async findByMail(mail: string): Promise<DocumentType<UserEntity> | null> {
         return this.userModel.findOne({mail});
     }

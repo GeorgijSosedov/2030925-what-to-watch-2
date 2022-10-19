@@ -1,5 +1,5 @@
-import { Genre } from "../../types/genres-type.js"
-import { User } from "../../types/users.js"
+import { Genre } from "../../../types/genres-type.js"
+import { User } from "../../../types/users.js"
 
 export default class CreateFilmDTO {
 public title!: string;

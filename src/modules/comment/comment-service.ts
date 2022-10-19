@@ -3,7 +3,7 @@ import { DocumentType } from "@typegoose/typegoose/lib/types.js";
 import { inject, injectable } from "inversify";
 import { LoggerInterface } from "../../logger/logger-interface.js";
 import { Component } from "../../types/component.types.js";
-import createCommentDto from "../dto/create-comment.dto.js";
+import createCommentDto from "./dto/create-comment.dto.js";
 import { CommentServiceInterface } from "./comment-service.interface.js";
 import { CommentEntity } from "./comment.entity.js";
 
