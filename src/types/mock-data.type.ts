@@ -10,7 +10,7 @@ export type MockData = {
     actors: string[]
     producers: string[]
     lengths: number[]
-    comments: number[]
+    commentsCount: number[]
     users: string[]
     posters: string[]
     backgrounds: string[]

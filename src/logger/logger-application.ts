@@ -5,7 +5,8 @@ import { LoggerInterface } from "./logger-interface.js";
 import 'reflect-metadata'
 import { DatabaseInterface } from "../database-client/database.interface.js";
 import { getURI } from "../utils/db.js";
-import { UserModel } from "../modules/user.model.js";
+import { UserModel } from "../modules/user/user.entity.js";
+
 
 @injectable()
 export default class LoggerApplication {
