@@ -1,0 +1,171 @@
+openapi: 3.1.0
+info:
+  title: API-сервер для проекта "Что Посмотреть"
+  description: Список маршрутов и ресурсов проекта "Что Посмотреть"
+license: 
+name: MIT
+url: https://opensource.org/licenses/MIT
+verison: 1.0.0
+tags: 
+- name: films
+  description: Действия с фильмами
+- name: comments
+  description: Действия с комментариями
+- name: users
+  description: Действия с пользователями
+
+paths:
+ /films/create:
+  post:
+  tags:
+    - films
+  summary: Создание нового фильма
+  description: Создаёт новый фильм
+
+ /films/edit:
+  post:
+  tags:
+    - films
+  summary: Редактирование карточки фильма
+  description: Редактирует свою карточку фильма
+
+ /films/delete:
+  post:
+  tags:
+    - films
+  summary: Удаление карточки фильма
+  description: Удаляет свою карточку фильма
+
+ /films/list:
+  post:
+  tags:
+    - films
+  summary: Получение списка фильмов
+  description: Показывает полный список фильмов
+
+ /films/genre:
+  post:
+  tags:
+    - films
+  summary: Сортировка фильмов по жанру
+  description: Показывает фильмы определённого жанра
+
+ /films/description:
+  post:
+  tags:
+    - films
+  summary: Получение детальной информации по фильму
+  description: Показывает подробное описание фильма и количество комментариев к нему
+
+ /films/promo:
+  post:
+  tags:
+    - films
+  summary: Получение промо-фильма
+  description: Показывает промо-фильм
+
+ /films/toWatch:
+  post:
+  tags:
+    - films
+  summary: Получение списка фильмов "К просмотру"
+  description: Показывает все фильмы,добавленные "К просмотру"
+
+ /films/toWatch/delete:
+  post:
+  tags:
+    - films
+    - toWatch 
+  summary: Добавление/Удаление фильмов из списка "К просмотру"
+  description: Добавляет/Удаляет фильм из списка "К просмотру"
+
+ comments/create:
+  post:
+  tags:
+    - comments
+  summary: Добавление комментария к фильму
+  description: Добавляет комментарий к определённому фильму
+
+ comments/list:
+  post:
+  tags:
+    - comments
+  summary: Получение полного списка комментариев
+  description: Показывает полный список комментариев к определённому фильму
+
+ users/register:
+  post:
+  tags:
+    - users
+  summary: Создание нового пользователя
+  description: Регистрирует нового пользователя
+
+ requestBody:
+  description: Информация для создания нового пользователя
+  content:
+    application/json:
+      schema:
+        $ref: '#components/schemas/createUser'
+  required: true
+
+ users/login:
+  post:
+  tags:
+    - users
+  summary: Авторизация пользователя
+  description: Авторизирует пользователя с помощью логина и пароля
+
+ get: 
+  tags:
+    - users
+  summary: Проверка состояния пользователя
+  description: Проверяет,авторизован ли пользователь
+
+ users/quit:
+  post:
+  tags:
+    - users
+  summary: Выход из учётной записи
+  description: Выходит из учётной записи пользователя
+
+ components: 
+  schemas:
+    createUser:
+      type: object
+
+      properties: 
+        email: 
+          type: string
+          example: something@mail.ru
+        
+        name: 
+          type: string
+          example: qwerty12345
+
+        password: 
+          type: string
+          example: 12345
+
+    user: 
+      type: object
+
+      properties: 
+        id: 
+          type: string
+          example: 347y6h34643h21h45h3jh
+
+        email: 
+          type: string
+          example: something@mail.ru
+
+
+
+
+  
+
+
+
+
+
+
+
