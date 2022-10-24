@@ -1,6 +1,8 @@
-import typegoose,{ defaultClasses, getModelForClass} from "@typegoose/typegoose";
+import typegoose,{ defaultClasses, getModelForClass, Ref} from "@typegoose/typegoose";
 import { User } from "../../types/users";
 import { Comment } from "../../types/comments";
+import { FilmEntity } from "../film/film.entity";
+import { UserEntity } from "../user/user.entity";
 
 
 
@@ -19,13 +21,21 @@ export interface CommentEntity extends defaultClasses.Base {}
 export class CommentEntity extends defaultClasses.TimeStamps implements Comment{
 
 @prop({trim: true,required: true})
-public text!: string
+public text!: string;
 @prop({required: true})
 public userRating!: string
-@prop({required: true})
-public postDate!: Date
 @prop()
-public user!: User
+public user!: User;
+@prop({
+    ref: FilmEntity,
+    required: true
+})
+public filmId!: Ref<FilmEntity>;
+@prop({
+    ref: UserEntity,
+    required: true
+})
+public userId!: Ref<UserEntity>;
 }
 
 export const CommentModel = getModelForClass(CommentEntity)

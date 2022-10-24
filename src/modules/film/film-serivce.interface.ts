@@ -4,5 +4,14 @@ import { FilmEntity } from "./film.entity.js"
 
 export interface FilmServiceInterface {
     create(dto: CreateFilmDTO): Promise<DocumentType<FilmEntity>>
-    findById(id: string): Promise<DocumentType<FilmEntity> | null>
+    findById(filmId: string): Promise<DocumentType<FilmEntity> | null>
+    find(count?: number): Promise<DocumentType<FilmEntity>[]>
+    edit(filmId: string): Promise<DocumentType<FilmEntity> | null>
+    delete(filmId: string): Promise<DocumentType<FilmEntity> | null>
+    findByGenre(genres: string, count?: number): Promise<DocumentType<FilmEntity>[]>
+    findPromo(filmId: string): Promise<DocumentType<FilmEntity> | null>
+    findFavorite(): Promise<DocumentType<FilmEntity>[]>
+    addOrRemoveFavorite(filmId:string, status: 0|1): Promise<DocumentType<FilmEntity> | null>
+    exists(filmId: string): Promise<boolean>;
+    incCommentCount(filmId:string): Promise<DocumentType<FilmEntity> | null>
 }
