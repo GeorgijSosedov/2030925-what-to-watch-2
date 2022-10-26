@@ -20,7 +20,7 @@ public generate(): string {
     const actor = getRandomItem<string>(this.mockData.actors)
     const producer = getRandomItem<string>(this.mockData.producers)
     const length = getRandomItem<number>(this.mockData.lengths)
-    const comment = getRandomItem<number>(this.mockData.comments)
+    const comment = getRandomItem<number>(this.mockData.commentsCount)
     const user = getRandomItem<string>(this.mockData.users)
     const poster = getRandomItem<string>(this.mockData.posters)
     const background = getRandomItem<string>(this.mockData.backgrounds)

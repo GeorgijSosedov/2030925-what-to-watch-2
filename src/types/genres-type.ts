@@ -9,9 +9,3 @@ romance,
 scifi,
 thriller
 } 
-
-
-
-
-
-
