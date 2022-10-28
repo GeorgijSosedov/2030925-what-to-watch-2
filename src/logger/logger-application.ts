@@ -5,19 +5,42 @@ import { LoggerInterface } from "./logger-interface.js";
 import 'reflect-metadata'
 import { DatabaseInterface } from "../database-client/database.interface.js";
 import { getURI } from "../utils/db.js";
-import { UserModel } from "../modules/user/user.entity.js";
+import express, { Express } from "express";
+import { ControllerInterface } from "../controller/controller.interface.js";
+import { ExceptionFilterInterface } from "../utils/errors/exception-filter.interface.js";
+import UserController from "../modules/user/controller/user.controller.js";
+
 
 
 @injectable()
 export default class LoggerApplication {
+private expressApp: Express;
 static init() {
     throw new Error('Method not implemented.');
 }
 constructor(
     @inject(Component.LoggerInterface) private logger: LoggerInterface,
     @inject(Component.ConfigInterface) private config: ConfigInterface,
-    @inject(Component.DatabaseInterface) private database: DatabaseInterface
-) {}
+    @inject(Component.DatabaseInterface) private database: DatabaseInterface,
+    @inject(Component.FilmController) private filmController: ControllerInterface,
+    @inject(Component.ExceptionFilterInterface) private exceptionFilter: ExceptionFilterInterface,
+    @inject(Component.UserController) private userController: UserController
+) {
+    this.expressApp = express()
+}
+
+public async initRoutes() {
+    this.expressApp.use('/films', this.filmController.router)
+}
+
+public initMiddleware() {
+    this.expressApp.use(express.json)
+}
+
+public initExceptionFilters() {
+    this.expressApp.use(this.exceptionFilter.catch.bind(this.exceptionFilter))
+    this.expressApp.use('/users', this.userController.router)
+}
 
 public async init() {
     this.logger.info('Происходит инициализация...');
@@ -32,14 +55,10 @@ public async init() {
       );
     await this.database.connect(uri)
 
-    const user = new UserModel({
-        email: 'test@emailru',
-        avatarPath: 'keks.jpg',
-        firstname: '2',
-        lastname: 'Unknown'
-      });
-      
-       const error = user.validateSync();
-       console.log(error);
+    this.initMiddleware
+    this.initRoutes
+    this.initExceptionFilters
+    this.expressApp.listen(this.config.get('PORT'))
+    this.logger.info(`Сервер запущен на: http://localhost:${this.config.get('PORT')}`)
 };
 };

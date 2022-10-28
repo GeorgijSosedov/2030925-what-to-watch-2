@@ -3,3 +3,39 @@
 GET http://localhost:3123/api HTTP/1.1
 
 ###
+
+#Фильмы 
+##Получить список фильмов 
+
+GET http://localhost:4000/films HTTP/1.1
+Content-Type: application/json
+
+###
+
+#Пользователи
+## Регистрация пользователя
+
+GET http://localhost:4000/users/register HTTP/1.1
+Content-Type: application/json
+
+{
+    "mail":  "sniff@beb.ru",
+    "avatar": "chtoto.jpg",
+    "name": "Nick Name",
+    "password": "S32i4hgU68Y"
+}
+
+###
+
+#Пользователи
+## Авторизация пользователя
+
+GET http://localhost:4000/users/login HTTP/1.1
+Content-Type: application/json
+
+{
+    "mail": "something@beb.ru",
+    "password": "H17hYz147Yx"
+}
+
+###
