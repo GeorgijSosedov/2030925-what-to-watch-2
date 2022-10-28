@@ -1,5 +1,4 @@
-import { Router } from "express";
-import { Response } from "got";
+import { Response, Router } from "express";
 import { injectable } from "inversify";
 import { LoggerInterface } from "../logger/logger-interface.js";
 import { RouteInterface } from "../types/route.interface.js";
@@ -24,7 +23,7 @@ export abstract class Controller implements ControllerInterface {
       this.logger.info(`Путь зарегистрирован: ${route.method.toUpperCase()} ${route.path}`)
   }
 
-  public send<T>(res: Response, statusCode: number, data: T): void {
+  public send<T>(res: Response, statusCode: number, data: T): void  {
     res
       .type('application/json')
       .status(statusCode)

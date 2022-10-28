@@ -1,5 +1,4 @@
-import { NextFunction } from "express"
-import { Request, Response } from "got"
+import { NextFunction, Request, Response } from "express"
 import { HttpMethod } from "./http-method.enum"
 
 export interface RouteInterface {
