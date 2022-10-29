@@ -18,6 +18,10 @@ import { FilmEntity, FilmModel } from './modules/film/film.entity.js'
 import { CommentServiceInterface } from './modules/comment/comment-service.interface.js'
 import CommentService from './modules/comment/comment-service.js'
 import { CommentEntity, CommentModel } from './modules/comment/comment.entity.js'
+import { ControllerInterface } from './controller/controller.interface.js'
+import FilmController from './modules/film/controller/film.controller.js'
+import ExceptionFilter from './utils/errors/exception-filter.js'
+import { ExceptionFilterInterface } from './utils/errors/exception-filter.interface.js'
 
 const applicationContainer = new Container();
 applicationContainer.bind<LoggerApplication>(Component.LoggerApplication).to(LoggerApplication).inSingletonScope();
@@ -27,6 +31,8 @@ applicationContainer.bind<DatabaseInterface>(Component.DatabaseInterface).to(Dat
 applicationContainer.bind<UserServiceInterface>(Component.UserServiceInterface).to(UserService).inSingletonScope()
 applicationContainer.bind<FilmServiceInterface>(Component.FilmServiceInterface).to(FilmService).inSingletonScope()
 applicationContainer.bind<CommentServiceInterface>(Component.CommentServiceInterface).to(CommentService).inSingletonScope()
+applicationContainer.bind<ControllerInterface>(Component.FilmController).to(FilmController).inSingletonScope()
+applicationContainer.bind<ExceptionFilterInterface>(Component.ExceptionFilterInterface).to(ExceptionFilter).inSingletonScope()
 applicationContainer.bind<types.ModelType<UserEntity>>(Component.UserModel).toConstantValue(UserModel)
 applicationContainer.bind<types.ModelType<FilmEntity>>(Component.FilmModel).toConstantValue(FilmModel)
 applicationContainer.bind<types.ModelType<CommentEntity>>(Component.CommentModel).toConstantValue(CommentModel)

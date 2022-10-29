@@ -7,8 +7,11 @@ export const Component = {
     FilmServiceInterface: Symbol.for('FilmServiceInterface'),
     CommentServiceInterface: Symbol.for('CommentServiceInterface'),
     GenreSerivceInterface: Symbol.for('GenreServiceInterface'),
+    ExceptionFilterInterface: Symbol.for('ExceptionFilter'),
     UserModel: Symbol.for('UserModel'),
     FilmModel: Symbol.for('FilmModel'),
     CommentModel: Symbol.for('CommentModel'),
-    GenreModel: Symbol.for('GenreModel')
+    GenreModel: Symbol.for('GenreModel'),
+    FilmController: Symbol.for('FilmController'),
+    UserController: Symbol.for('UserController')
 } as const
