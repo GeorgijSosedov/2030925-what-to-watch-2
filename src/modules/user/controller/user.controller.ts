@@ -8,6 +8,8 @@ import { Component } from "../../../types/component.types.js";
 import { HttpMethod } from "../../../types/http-method.enum.js";
 import HttpError from "../../../utils/errors/http-error.js";
 import { fillDTO } from "../../../utils/fillDTO.js";
+import { ValidateDtoMiddleware } from "../../../utils/middlewares/validate-dto.middleware.js";
+import { ValidateObjectIdMiddleware } from "../../../utils/middlewares/validate-objectid.middleware.js";
 import CreateUserDTO from "../dto/create-user.dto.js";
 import LoginUserDTO from "../dto/login-user.dto.js";
 import UserResponse from "../response/user.response.js";
@@ -23,8 +25,24 @@ constructor(
     super(logger)
     this.logger.info('Регистрирую пути для UserController...')
 
-    this.addRoute({path: '/register', method: HttpMethod.Post, handler: this.create})
-    this.addRoute({path: '/login', method: HttpMethod.Post, handler: this.login})
+    this.addRoute({
+        path: '/register', 
+        method: HttpMethod.Post, 
+        handler: this.create,
+        middlewares: [
+            new ValidateObjectIdMiddleware('filmId'),
+            new ValidateDtoMiddleware(CreateUserDTO)
+        ]
+    });
+    this.addRoute({
+        path: '/login', 
+        method: HttpMethod.Post, 
+        handler: this.login,
+        middlewares: [
+            new ValidateObjectIdMiddleware('filmId'),
+            new ValidateDtoMiddleware(LoginUserDTO)
+    ]
+    });
 }
 
 public async create(

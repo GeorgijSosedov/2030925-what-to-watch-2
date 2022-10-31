@@ -9,6 +9,7 @@ import express, { Express } from "express";
 import { ControllerInterface } from "../controller/controller.interface.js";
 import { ExceptionFilterInterface } from "../utils/errors/exception-filter.interface.js";
 import UserController from "../modules/user/controller/user.controller.js";
+import CommentController from "../modules/comment/controller/comment.controller.js";
 
 
 
@@ -24,13 +25,16 @@ constructor(
     @inject(Component.DatabaseInterface) private database: DatabaseInterface,
     @inject(Component.FilmController) private filmController: ControllerInterface,
     @inject(Component.ExceptionFilterInterface) private exceptionFilter: ExceptionFilterInterface,
-    @inject(Component.UserController) private userController: UserController
+    @inject(Component.UserController) private userController: UserController,
+    @inject(Component.CommentController) private commentController: CommentController
 ) {
     this.expressApp = express()
 }
 
 public async initRoutes() {
     this.expressApp.use('/films', this.filmController.router)
+    this.expressApp.use('/users', this.userController.router)
+    this.expressApp.use('/comments', this.commentController.router)
 }
 
 public initMiddleware() {
@@ -39,7 +43,6 @@ public initMiddleware() {
 
 public initExceptionFilters() {
     this.expressApp.use(this.exceptionFilter.catch.bind(this.exceptionFilter))
-    this.expressApp.use('/users', this.userController.router)
 }
 
 public async init() {

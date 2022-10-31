@@ -1,16 +1,17 @@
 import { Film } from '../types/films.js'
+import { Genre } from '../types/genres-type.js'
 
 export const createFilm = (row: string) => {
 const tokens = row.replace('/n', '').split('/t')
 const [title,description,date,genre,release,rating,preview,video,actors,producer,
-length,comments,poster,background,color,name,mail,avatar,password,
+length,commentsCount,poster,background,color,name,mail,avatar,password,
 ] = tokens
 
 return {
     title,
     description,
     date: new Date(date),
-    genre,
+    genre: (genre as unknown) as Genre,
     release,
     rating,
     preview,
@@ -18,7 +19,7 @@ return {
     actors,
     producer,
     length,
-    comments,
+    commentsCount: Number(commentsCount),
     poster,
     background,
     color,
