@@ -21,7 +21,7 @@ public preview!: string;
 public video!: string;
 @IsArray({message: 'Это поле должно быть массивом'})
 @IsString({each: true, message: 'Напишите в строку имена актёров'})
-public actors!: string[];
+public actors!: string;
 @MinLength(2,{message: 'Минимальная длина имени - 2 символа'})
 @MaxLength(50,{message: 'Максимальная длина имени - 50 символов'})
 public producer!: string;
