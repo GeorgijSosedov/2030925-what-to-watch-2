@@ -1,1 +1,4 @@
 export const DEFAULT_FILMS_COUNT = 60
+export const DEFAULT_DISCUSSED_FILM_COUNT = 5;
+export const DEFAULT_NEW_FILM_COUNT = 5;
+

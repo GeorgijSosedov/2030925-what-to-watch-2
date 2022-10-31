@@ -3,7 +3,7 @@ import { Film } from '../types/films.js'
 export const createFilm = (row: string) => {
 const tokens = row.replace('/n', '').split('/t')
 const [title,description,date,genre,release,rating,preview,video,actors,producer,
-length,comments,poster,background,color,name,mail,avatar,password,
+length,commentsCount,poster,background,color,name,mail,avatar,password,
 ] = tokens
 
 return {
@@ -18,7 +18,7 @@ return {
     actors,
     producer,
     length,
-    comments,
+    commentsCount,
     poster,
     background,
     color,

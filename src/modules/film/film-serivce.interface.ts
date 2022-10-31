@@ -1,12 +1,13 @@
 import { DocumentType } from "@typegoose/typegoose/lib/types.js"
 import CreateFilmDTO from "./dto/create-film.dto.js"
+import UpdateFilmDTO from "./dto/update-film.dto.js"
 import { FilmEntity } from "./film.entity.js"
 
 export interface FilmServiceInterface {
     create(dto: CreateFilmDTO): Promise<DocumentType<FilmEntity>>
     findById(filmId: string): Promise<DocumentType<FilmEntity> | null>
     find(count?: number): Promise<DocumentType<FilmEntity>[]>
-    edit(filmId: string): Promise<DocumentType<FilmEntity> | null>
+    edit(filmId: string,body: UpdateFilmDTO): Promise<DocumentType<FilmEntity> | null>
     delete(filmId: string): Promise<DocumentType<FilmEntity> | null>
     findByGenre(genres: string, count?: number): Promise<DocumentType<FilmEntity>[]>
     findPromo(filmId: string): Promise<DocumentType<FilmEntity> | null>

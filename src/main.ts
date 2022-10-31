@@ -22,6 +22,7 @@ import { ControllerInterface } from './controller/controller.interface.js'
 import FilmController from './modules/film/controller/film.controller.js'
 import ExceptionFilter from './utils/errors/exception-filter.js'
 import { ExceptionFilterInterface } from './utils/errors/exception-filter.interface.js'
+import CommentController from './modules/comment/controller/comment.controller.js'
 
 const applicationContainer = new Container();
 applicationContainer.bind<LoggerApplication>(Component.LoggerApplication).to(LoggerApplication).inSingletonScope();
@@ -33,6 +34,7 @@ applicationContainer.bind<FilmServiceInterface>(Component.FilmServiceInterface).
 applicationContainer.bind<CommentServiceInterface>(Component.CommentServiceInterface).to(CommentService).inSingletonScope()
 applicationContainer.bind<ControllerInterface>(Component.FilmController).to(FilmController).inSingletonScope()
 applicationContainer.bind<ExceptionFilterInterface>(Component.ExceptionFilterInterface).to(ExceptionFilter).inSingletonScope()
+applicationContainer.bind<ControllerInterface>(Component.CommentController).to(CommentController).inSingletonScope()
 applicationContainer.bind<types.ModelType<UserEntity>>(Component.UserModel).toConstantValue(UserModel)
 applicationContainer.bind<types.ModelType<FilmEntity>>(Component.FilmModel).toConstantValue(FilmModel)
 applicationContainer.bind<types.ModelType<CommentEntity>>(Component.CommentModel).toConstantValue(CommentModel)
