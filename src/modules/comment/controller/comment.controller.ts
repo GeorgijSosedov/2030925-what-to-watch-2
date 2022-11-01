@@ -7,6 +7,7 @@ import { Component } from "../../../types/component.types";
 import { HttpMethod } from "../../../types/http-method.enum";
 import HttpError from "../../../utils/errors/http-error";
 import { fillDTO } from "../../../utils/fillDTO";
+import { PrivateRouteMiddleware } from "../../../utils/middlewares/private-route.middleware";
 import { ValidateDtoMiddleware } from "../../../utils/middlewares/validate-dto.middleware";
 import { ValidateObjectIdMiddleware } from "../../../utils/middlewares/validate-objectid.middleware";
 import { FilmServiceInterface } from "../../film/film-serivce.interface";
@@ -30,15 +31,17 @@ export default class CommentController extends Controller {
             handler: this.create,
             middlewares: [
                 new ValidateObjectIdMiddleware('filmId'),
-                new ValidateDtoMiddleware(CreateCommentDTO)
+                new ValidateDtoMiddleware(CreateCommentDTO),
+                new PrivateRouteMiddleware()
         ]
         });
     }
 
     public async create(
-        {body}: Request<object, object, CreateCommentDTO>,
+        req: Request<object, object, CreateCommentDTO>,
         res: Response
     ): Promise<void> {
+        const {body} = req
         if(!await this.filmSerivce.exists(body.filmId)) {
         throw new HttpError(
             StatusCodes.NOT_IMPLEMENTED,
@@ -46,8 +49,9 @@ export default class CommentController extends Controller {
             'CommentController'
         );
     }
-        const comment = await this.commentService.create(body);
+        /*const userId = req.user.id*/
+        const comment = await this.commentService.create({...body});
         await this.filmSerivce.incCommentCount(body.filmId);
-        this.created(res,fillDTO(CommentResponse,comment))
+        this.created(res,fillDTO(CommentResponse,comment));
     }
 }

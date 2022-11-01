@@ -1,9 +1,10 @@
 import { DocumentType } from "@typegoose/typegoose/lib/types.js"
+import { DocumentExistsInterface } from "../../types/document-exists.interface.js"
 import CreateFilmDTO from "./dto/create-film.dto.js"
 import UpdateFilmDTO from "./dto/update-film.dto.js"
 import { FilmEntity } from "./film.entity.js"
 
-export interface FilmServiceInterface {
+export interface FilmServiceInterface extends DocumentExistsInterface {
     create(dto: CreateFilmDTO): Promise<DocumentType<FilmEntity>>
     findById(filmId: string): Promise<DocumentType<FilmEntity> | null>
     find(count?: number): Promise<DocumentType<FilmEntity>[]>

@@ -9,13 +9,13 @@ import { StatusCodes } from "http-status-codes"
 import { fillDTO } from "../../../utils/fillDTO.js";
 import FilmResponse from "../response/film.response.js";
 import CreateFilmDTO from "../dto/create-film.dto.js";
-import HttpError from "../../../utils/errors/http-error.js";
 import UpdateFilmDTO from "../dto/update-film.dto.js";
 import * as core from 'express-serve-static-core';
 import { CommentServiceInterface } from "../../comment/comment-service.interface.js";
 import CommentResponse from "../../comment/response/comment.response.js";
 import { ValidateObjectIdMiddleware } from "../../../utils/middlewares/validate-objectid.middleware.js";
 import { ValidateDtoMiddleware } from "../../../utils/middlewares/validate-dto.middleware.js";
+import DocumentExistsMiddleware from "../../../utils/middlewares/document-exists.middleware.js";
 
 type ParamsGetFilm = {
     filmId: string
@@ -36,13 +36,19 @@ export default class FilmController extends Controller {
             path: '/:filmId',
             method: HttpMethod.Get,
             handler: this.show,
-            middlewares: [new ValidateObjectIdMiddleware('filmId')]
+            middlewares: [
+            new ValidateObjectIdMiddleware('filmId'),
+            new DocumentExistsMiddleware(this.filmService, 'Film', 'filmId')
+        ]
          });
         this.addRoute({
             path: '/:filmId', 
             method: HttpMethod.Get, 
             handler: this.index,
-            middlewares: [new ValidateObjectIdMiddleware('filmId')]
+            middlewares: [
+                new ValidateObjectIdMiddleware('filmId'),
+                new DocumentExistsMiddleware(this.filmService, 'Film', 'filmId')
+            ]
     })
         this.addRoute({
             path: '/', 
@@ -50,20 +56,26 @@ export default class FilmController extends Controller {
             handler: this.create,
             middlewares: [
             new ValidateObjectIdMiddleware('filmId'),
-            new ValidateDtoMiddleware(CreateFilmDTO)
+            new ValidateDtoMiddleware(CreateFilmDTO),
+            new DocumentExistsMiddleware(this.filmService, 'Film', 'filmId')
             ]
     })
         this.addRoute({
             path: '/:filmId', 
             method: HttpMethod.Delete, 
             handler: this.delete,
-            middlewares: [new ValidateObjectIdMiddleware('filmId')]
+            middlewares: [
+            new ValidateObjectIdMiddleware('filmId'),
+            new DocumentExistsMiddleware(this.filmService, 'Film', 'filmId')]
         })
         this.addRoute({
             path: '/:filmId/comments', 
             method: HttpMethod.Get, 
             handler: this.getComments,
-            middlewares: [new ValidateObjectIdMiddleware('filmId')]
+            middlewares: [
+                new ValidateObjectIdMiddleware('filmId'),
+                new DocumentExistsMiddleware(this.filmService, 'Film', 'filmId')
+        ]
         })
         this.addRoute({
             path: '/:filmId', 
@@ -71,7 +83,8 @@ export default class FilmController extends Controller {
             handler: this.edit,
             middlewares: [
             new ValidateObjectIdMiddleware('filmId'),
-            new ValidateDtoMiddleware(CreateFilmDTO)
+            new ValidateDtoMiddleware(CreateFilmDTO),
+            new DocumentExistsMiddleware(this.filmService, 'Film', 'filmId')
             ]
     })
     }
@@ -82,15 +95,6 @@ export default class FilmController extends Controller {
     ): Promise<void> {
         const {filmId} = params;
         const film = await this.filmService.findById(filmId)
-
-        if (!film) {
-            throw new HttpError(
-                StatusCodes.NOT_FOUND,
-                `Фильм с номером ${filmId} не найден.`,
-                'FilmController'
-              );
-            }
-        
             this.ok(res, fillDTO(FilmResponse, film));
         }
     
@@ -102,22 +106,10 @@ export default class FilmController extends Controller {
     }
 
     public async create(
-        {body}: Request<Record<string, unknown>, Record<string, unknown>, CreateFilmDTO>,
+        req: Request<Record<string, unknown>, Record<string, unknown>, CreateFilmDTO>,
         res: Response): Promise<void> {
-
-        const existFilm = await this.filmService.findByGenre(body.title);
-
-        if (existFilm) {
-            throw new HttpError(
-                StatusCodes.UNPROCESSABLE_ENTITY,
-                `Упс! Кажется,фильм с таким названием «${body.title}» уже существует.`,
-                'CategoryController'
-            ) 
-            
-    }
-        
-
-        const result = await this.filmService.create(body)
+        const {body,user} = req
+        const result = await this.filmService.create({...body, userId: user.id})
         this.send(
             res,
             StatusCodes.CREATED,
@@ -131,14 +123,6 @@ export default class FilmController extends Controller {
     ): Promise<void> {
         const {filmId} = params
         const film = await this.filmService.delete(filmId)
-
-        if (!film) {
-            throw new HttpError (
-                StatusCodes.NOT_FOUND,
-                `Фильм с названием ${filmId} не найден.`,
-                'FilmController'
-            )
-        }
         this.noContent(res, film)
     }
 
@@ -148,14 +132,6 @@ export default class FilmController extends Controller {
         res: Response
     ): Promise<void> {
         const updatedFilm = await this.filmService.edit(params.filmId, body)
-
-        if (!updatedFilm) {
-            throw new HttpError(
-                StatusCodes.NOT_FOUND,
-                `Фильм с названием ${params.filmId} не найден.`,
-                'FilmController'
-            )
-        }
         this.ok(res, fillDTO(FilmResponse, updatedFilm))
     }
 
@@ -163,13 +139,6 @@ export default class FilmController extends Controller {
         {params}: Request<core.ParamsDictionary | ParamsGetFilm, object, object>,
         res: Response
     ): Promise<void> {
-        if (!await this.filmService.exists(params.filmId)) {
-            throw new HttpError(
-                StatusCodes.NOT_FOUND,
-                `Фильм с названием ${params.filmId} не найден.`,
-                'FilmController'
-            );
-        }
         const comments = await this.commentService.findById(params.filmId);
         this.ok(res, fillDTO(CommentResponse,comments))
     }

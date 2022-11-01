@@ -10,6 +10,7 @@ import { ControllerInterface } from "../controller/controller.interface.js";
 import { ExceptionFilterInterface } from "../utils/errors/exception-filter.interface.js";
 import UserController from "../modules/user/controller/user.controller.js";
 import CommentController from "../modules/comment/controller/comment.controller.js";
+import { AuthenticateMiddleware } from "../utils/middlewares/authenticate.middleware.js";
 
 
 
@@ -39,6 +40,12 @@ public async initRoutes() {
 
 public initMiddleware() {
     this.expressApp.use(express.json)
+    this.expressApp.use(
+        '/upload',
+        express.static(this.config.get('UPLOAD_DIRECTORY'))
+    )
+    const authenticateMiddleware = new AuthenticateMiddleware(this.config.get('JWT_SECRET'));
+    this.expressApp.use(authenticateMiddleware.execute.bind(authenticateMiddleware))
 }
 
 public initExceptionFilters() {

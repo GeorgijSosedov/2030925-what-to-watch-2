@@ -37,6 +37,11 @@ public setPassword(password: string,salt: string) {
 public getPassword() {
     this.password
 }
+
+public verifyPassword(password: string, salt: string) {
+const hashPassword = createSHA256(password,salt)
+    return hashPassword === this.password
+}
 }
 
 export const UserModel = getModelForClass(UserEntity)
