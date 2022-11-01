@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import mime from "mime";
+import mime from "mime-types";
 import multer, { diskStorage } from "multer";
 import { nanoid } from "nanoid";
 import { MiddlewareInterface } from "./middleware.interface.js";
