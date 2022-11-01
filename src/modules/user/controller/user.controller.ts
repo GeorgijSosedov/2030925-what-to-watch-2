@@ -8,6 +8,7 @@ import { Component } from "../../../types/component.types.js";
 import { HttpMethod } from "../../../types/http-method.enum.js";
 import HttpError from "../../../utils/errors/http-error.js";
 import { fillDTO } from "../../../utils/fillDTO.js";
+import { UploadFileMiddleware } from "../../../utils/middlewares/upload-file.middleware.js";
 import { ValidateDtoMiddleware } from "../../../utils/middlewares/validate-dto.middleware.js";
 import { ValidateObjectIdMiddleware } from "../../../utils/middlewares/validate-objectid.middleware.js";
 import CreateUserDTO from "../dto/create-user.dto.js";
@@ -20,7 +21,7 @@ export default class UserController extends Controller {
 constructor(
     @inject(Component.LoggerInterface) logger: LoggerInterface,
     @inject(Component.UserServiceInterface) private readonly userService: UserServiceInterface,
-    @inject(Component.ConfigInterface) private readonly configInterface: ConfigInterface
+    @inject(Component.ConfigInterface) private readonly configService: ConfigInterface
 ) {
     super(logger)
     this.logger.info('Регистрирую пути для UserController...')
@@ -30,8 +31,9 @@ constructor(
         method: HttpMethod.Post, 
         handler: this.create,
         middlewares: [
-            new ValidateObjectIdMiddleware('filmId'),
-            new ValidateDtoMiddleware(CreateUserDTO)
+            new ValidateObjectIdMiddleware('userId'),
+            new ValidateDtoMiddleware(CreateUserDTO),
+            new UploadFileMiddleware(this.configService.get('UPLOAD_DIRECTORY'), 'avatar')
         ]
     });
     this.addRoute({
@@ -39,7 +41,7 @@ constructor(
         method: HttpMethod.Post, 
         handler: this.login,
         middlewares: [
-            new ValidateObjectIdMiddleware('filmId'),
+            new ValidateObjectIdMiddleware('userId'),
             new ValidateDtoMiddleware(LoginUserDTO)
     ]
     });
@@ -58,7 +60,7 @@ public async create(
                 'UserController'
             )
         }
-        const result = await this.userService.create(body,this.configInterface.get('SALT'))
+        const result = await this.userService.create(body,this.configService.get('SALT'))
         this.send(
             res,
             StatusCodes.CREATED,
@@ -70,14 +72,20 @@ public async create(
         {body}:  Request<Record<string,unknown>, Record<string,unknown>,LoginUserDTO>,
         _res: Response,
     ): Promise<void> {
-        const existUser = await this.userService.findByMail(body.mail)
+        const existUser = await this.userService.findByMail(body.mail);
 
         if (existUser) {
             throw new HttpError(
                 StatusCodes.NOT_IMPLEMENTED,
                 'Не существует',
                 'UserController',
-            )
-        }
+            );
+        };
+    };
+
+    public async uploadAvatar(req: Request, res: Response) {
+        this.created(res, {
+            filepath: req.file?.path
+        });
     }
 }

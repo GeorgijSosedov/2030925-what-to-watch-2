@@ -7,6 +7,7 @@ export type ConfigSchema = {
     DB_PASSWORD: string;
     DB_PORT: number;
     DB_NAME: string;
+    UPLOAD_DIRECTORY: string;
     SALT: string;
 }
 
@@ -46,6 +47,12 @@ DB_NAME: {
     format: String,
     env: 'DB_NAME',
     default: 'course-nodejs-restapi'
+},
+UPLOAD_DIRECTORY: {
+    doc: 'Директория для загрузки файлов',
+    format: String,
+    env: 'UPLOAD_DIRECTORY',
+    default: null
 },
 SALT: {
     doc: 'Набор чисел для хэша пароля',
