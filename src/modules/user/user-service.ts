@@ -4,6 +4,7 @@ import { inject, injectable } from "inversify";
 import { LoggerInterface } from "../../logger/logger-interface.js";
 import { Component } from "../../types/component.types.js";
 import CreateUserDTO from "./dto/create-user.dto.js";
+import LoginUserDTO from "./dto/login-user.dto.js";
 import updateUserDto from "./dto/update-user.dto.js";
 import { UserServiceInterface } from "./user-service.interface.js";
 import { UserEntity } from "./user.entity.js";
@@ -48,5 +49,18 @@ export default class UserService implements UserServiceInterface {
         return this.userModel
         .findByIdAndUpdate(userId,dto,{new: true})
         .exec()
+    }
+
+    public async verifyUser(dto: LoginUserDTO, salt: string): Promise<DocumentType<UserEntity> | null> {
+        const user = await this.findByMail(dto.mail)
+
+        if (! user) {
+            return null
+        }
+
+        if (user.verifyPassword(dto.password,salt)) {
+            return user
+        }
+        return null
     }
 }

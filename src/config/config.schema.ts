@@ -8,6 +8,7 @@ export type ConfigSchema = {
     DB_PORT: number;
     DB_NAME: string;
     UPLOAD_DIRECTORY: string;
+    JWT_SECRET: string;
     SALT: string;
 }
 
@@ -53,6 +54,12 @@ UPLOAD_DIRECTORY: {
     format: String,
     env: 'UPLOAD_DIRECTORY',
     default: null
+},
+JWT_SECRET: {
+doc: 'Секретный набор данных JWT для авторизации' ,
+format : String ,
+env: 'JWT_SECRET' ,
+default: null
 },
 SALT: {
     doc: 'Набор чисел для хэша пароля',

@@ -6,6 +6,7 @@ import { Controller } from "../../../controller/controller.js";
 import { LoggerInterface } from "../../../logger/logger-interface.js";
 import { Component } from "../../../types/component.types.js";
 import { HttpMethod } from "../../../types/http-method.enum.js";
+import { createJWT } from "../../../utils/createJWT.js";
 import HttpError from "../../../utils/errors/http-error.js";
 import { fillDTO } from "../../../utils/fillDTO.js";
 import { UploadFileMiddleware } from "../../../utils/middlewares/upload-file.middleware.js";
@@ -13,8 +14,10 @@ import { ValidateDtoMiddleware } from "../../../utils/middlewares/validate-dto.m
 import { ValidateObjectIdMiddleware } from "../../../utils/middlewares/validate-objectid.middleware.js";
 import CreateUserDTO from "../dto/create-user.dto.js";
 import LoginUserDTO from "../dto/login-user.dto.js";
+import LoggedUserResponse from "../response/logged-user.response.js";
 import UserResponse from "../response/user.response.js";
 import { UserServiceInterface } from "../user-service.interface.js";
+import { JWT_ALGORITM } from "../user.constant.js";
 
 @injectable()
 export default class UserController extends Controller {
@@ -38,18 +41,13 @@ constructor(
     });
     this.addRoute({
         path: '/login', 
-        method: HttpMethod.Post, 
-        handler: this.login,
-        middlewares: [
-            new ValidateObjectIdMiddleware('userId'),
-            new ValidateDtoMiddleware(LoginUserDTO)
-    ]
+        method: HttpMethod.Get, 
+        handler: this.checkAuthenticate
     });
 }
-
-public async create(
-    {body}: Request<Record<string,unknown>, Record<string,unknown>,CreateUserDTO>,
-    res: Response,
+    public async create(
+        {body}: Request<Record<string,unknown>, Record<string,unknown>,CreateUserDTO>,
+        res: Response,
     ): Promise<void> {
         const existUser = await this.userService.findByMail(body.mail)
 
@@ -70,22 +68,33 @@ public async create(
 
     public async login(
         {body}:  Request<Record<string,unknown>, Record<string,unknown>,LoginUserDTO>,
-        _res: Response,
+        res: Response,
     ): Promise<void> {
-        const existUser = await this.userService.findByMail(body.mail);
+        const user = await this.userService.verifyUser(body, this.configService.get('SALT'));
 
-        if (existUser) {
+        if (! user) {
             throw new HttpError(
                 StatusCodes.NOT_IMPLEMENTED,
                 'Не существует',
-                'UserController',
+                'UserController'
             );
-        };
-    };
+        }
+        const token = await createJWT(
+            JWT_ALGORITM,
+            this.configService.get('JWT_SECRET'),
+            {mail: user.mail, id: user.id});
+        this.ok(res,fillDTO(LoggedUserResponse, {mail: user.mail,token}));
+    }
 
     public async uploadAvatar(req: Request, res: Response) {
         this.created(res, {
             filepath: req.file?.path
         });
+    }
+
+    public async checkAuthenticate(req: Request, res: Response) {
+        const user = await this.userService.findByMail(req.user.mail)
+
+        this.ok(res, fillDTO(LoggedUserResponse, user))
     }
 }

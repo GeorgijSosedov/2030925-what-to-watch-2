@@ -9,8 +9,7 @@ export default class CreateCommentDTO {
     @Max(10, {message: 'Ваша оценка не может быть больше десяти!'})
     public userRating!: string;
     @IsMongoId({message: 'Идентификатор фильма должен соответствовать ObjectID'})
-    filmId!: string;
-    @IsMongoId({message: 'Идентификатор пользователя должен соответствовать ObjectID'})
+    public filmId!: string;
     public userId!: string;
     @IsDateString({}, {message: 'Дата должна быть в ISO-формате'})
     public date!: string;

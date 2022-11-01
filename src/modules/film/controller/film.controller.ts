@@ -106,9 +106,10 @@ export default class FilmController extends Controller {
     }
 
     public async create(
-        {body}: Request<Record<string, unknown>, Record<string, unknown>, CreateFilmDTO>,
+        req: Request<Record<string, unknown>, Record<string, unknown>, CreateFilmDTO>,
         res: Response): Promise<void> {
-        const result = await this.filmService.create(body)
+        const {body,user} = req
+        const result = await this.filmService.create({...body, userId: user.id})
         this.send(
             res,
             StatusCodes.CREATED,
