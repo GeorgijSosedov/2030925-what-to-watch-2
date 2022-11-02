@@ -1,9 +1,9 @@
-import { Expose, Type } from 'class-transformer'
-import UserResponse from '../../user/response/user.response';
+import { Expose, Type } from 'class-transformer';
+import UserResponse from '../../user/response/user.response.js';
 
 export default class FilmResponse {
     @Expose()
-    public id!: string;
+  public id!: string;
 
     @Expose()
     public title!: string;

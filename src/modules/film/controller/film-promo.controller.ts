@@ -1,15 +1,15 @@
-import { Request, Response } from "express";
-import { StatusCodes } from "http-status-codes";
-import { injectable, inject } from "inversify";
-import { Controller } from "../../../controller/controller";
-import { LoggerInterface } from "../../../logger/logger-interface";
-import { Component } from "../../../types/component.types";
-import { HttpMethod } from "../../../types/http-method.enum";
-import HttpError from "../../../utils/errors/http-error";
-import { fillDTO } from "../../../utils/fillDTO";
-import { PrivateRouteMiddleware } from "../../../utils/middlewares/private-route.middleware";
-import { FilmServiceInterface } from "../film-serivce.interface";
-import FilmResponse from "../response/film.response";
+import { Request, Response } from 'express';
+import { StatusCodes } from 'http-status-codes';
+import { injectable, inject } from 'inversify';
+import { Controller } from '../../../controller/controller.js';
+import { LoggerInterface } from '../../../logger/logger-interface.js';
+import { Component } from '../../../types/component.types.js';
+import { HttpMethod } from '../../../types/http-method.enum.js';
+import HttpError from '../../../utils/errors/http-error.js';
+import { fillDTO } from '../../../utils/fillDTO.js';
+import { PrivateRouteMiddleware } from '../../../utils/middlewares/private-route.middleware.js';
+import { FilmServiceInterface } from '../film-serivce.interface.js';
+import FilmResponse from '../response/film.response.js';
 
 @injectable()
 export default class FilmPromoController extends Controller {
@@ -19,12 +19,12 @@ export default class FilmPromoController extends Controller {
   ) {
     super(logger);
     this.addRoute({
-        path: '/', 
-        method: HttpMethod.Get, 
-        handler: this.getPromo,
-        middlewares: [
+      path: '/',
+      method: HttpMethod.Get,
+      handler: this.getPromo,
+      middlewares: [
         new PrivateRouteMiddleware()
-        ]
+      ]
     });
   }
 

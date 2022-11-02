@@ -1,15 +1,15 @@
-import { Expose } from "class-transformer";
+import { Expose } from 'class-transformer';
 
 export default class UserResponse {
     @Expose()
-    public mail!: string
+  public mail!: string;
 
     @Expose()
-    public avatar!: string
+    public avatar!: string;
 
     @Expose()
-    public name!: string
+    public name!: string;
 
     @Expose()
-    public password!: string
+    public password!: string;
 }

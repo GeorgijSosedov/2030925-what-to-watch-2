@@ -1,1 +1,1 @@
-export const JWT_ALGORITM = 'HS456'
+export const JWT_ALGORITM = 'HS456';

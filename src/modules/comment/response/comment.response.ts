@@ -1,16 +1,16 @@
-import { Expose } from "class-transformer";
-import { User } from "../../../types/users";
+import { Expose } from 'class-transformer';
+import { User } from '../../../types/users.js';
 
 export default class CommentResponse {
     @Expose()
-    public text!: string
+  public text!: string;
 
     @Expose()
-    public userRating!: string
+    public userRating!: string;
 
     @Expose()
-    public postDate!: Date
+    public postDate!: Date;
 
     @Expose()
-    public user!: User
+    public user!: User;
 }
