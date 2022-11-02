@@ -25,7 +25,6 @@ public description!: string;
 public date!: Date;
 
 @prop({
-  type : () => String,
   enum: Genre
 })
 public genre!: Genre;

@@ -1,4 +1,7 @@
 import convict from 'convict';
+import validator from 'convict-format-with-validator';
+
+convict.addFormats(validator)
 
 export type ConfigSchema = {
     PORT: number;
@@ -20,7 +23,7 @@ export const configSchema = convict<ConfigSchema>({
     default: 4000
   },
   DB_HOST: {
-    doc: 'IP для сервера database',
+    doc: 'IP адрес сервера database (MongoDB)',
     format: 'ipaddress',
     env: 'DB_HOST',
     default: '127.0.0.1'
