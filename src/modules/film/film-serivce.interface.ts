@@ -17,4 +17,3 @@ export interface FilmServiceInterface extends DocumentExistsInterface {
     exists(filmId: string): Promise<boolean>;
     incCommentCount(filmId:string): Promise<DocumentType<FilmEntity> | null>
 }
-f
