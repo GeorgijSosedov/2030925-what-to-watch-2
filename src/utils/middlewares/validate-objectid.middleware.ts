@@ -1,25 +1,25 @@
-import { Request, Response, NextFunction } from "express";
-import { StatusCodes } from "http-status-codes";
-import mongoose from "mongoose";
-import { MiddlewareInterface } from "./middleware.interface";
-import HttpError from "../errors/http-error";
+import { Request, Response, NextFunction } from 'express';
+import { StatusCodes } from 'http-status-codes';
+import mongoose from 'mongoose';
+import { MiddlewareInterface } from './middleware.interface.js';
+import HttpError from '../errors/http-error.js';
 
-const {Types} = mongoose
+const {Types} = mongoose;
 
 export class ValidateObjectIdMiddleware implements MiddlewareInterface {
-constructor(private param: string) {}
+  constructor(private param: string) {}
 
-public execute({params}: Request, _res: Response, next: NextFunction): void {
+  public execute({params}: Request, _res: Response, next: NextFunction): void {
     const objectId = params[this.param];
 
     if (Types.ObjectId.isValid(objectId)) {
-        return next()
+      return next();
     }
 
     throw new HttpError(
-        StatusCodes.BAD_REQUEST,
-        `${objectId} - несуществующий ObjectID`,
-        'ValidateObjectIdMiddleware'
-    )
-}
+      StatusCodes.BAD_REQUEST,
+      `${objectId} - несуществующий ObjectID`,
+      'ValidateObjectIdMiddleware'
+    );
+  }
 }

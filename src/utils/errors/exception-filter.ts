@@ -1,39 +1,39 @@
-import { Request, Response, NextFunction } from "express";
-import { StatusCodes } from "http-status-codes";
-import { inject, injectable } from "inversify";
-import { LoggerInterface } from "../../logger/logger-interface.js";
-import { Component } from "../../types/component.types.js";
-import { createErrorObject } from "../create-error-object.js";
-import { ExceptionFilterInterface } from "./exception-filter.interface.js";
-import HttpError from "./http-error.js";
+import { Request, Response, NextFunction } from 'express';
+import { StatusCodes } from 'http-status-codes';
+import { inject, injectable } from 'inversify';
+import { LoggerInterface } from '../../logger/logger-interface.js';
+import { Component } from '../../types/component.types.js';
+import { createErrorObject } from '../create-error-object.js';
+import { ExceptionFilterInterface } from './exception-filter.interface.js';
+import HttpError from './http-error.js';
 
 @injectable()
 export default class ExceptionFilter implements ExceptionFilterInterface {
-constructor(
+  constructor(
     @inject(Component.LoggerInterface) private logger: LoggerInterface,
-) {
-this.logger.info('Register ExceptionFilter')
-}
+  ) {
+    this.logger.info('Register ExceptionFilter');
+  }
 
-private handleHttpError(error: HttpError, _req: Request, res: Response, _next: NextFunction) {
-    this.logger.error(`[${error.detail}]: ${error.httpStatusCode} — ${error.message}`)
+  private handleHttpError(error: HttpError, _req: Request, res: Response, _next: NextFunction) {
+    this.logger.error(`[${error.detail}]: ${error.httpStatusCode} — ${error.message}`);
     res
-    .status(error.httpStatusCode)
-    .json(createErrorObject(error.message))
-}
+      .status(error.httpStatusCode)
+      .json(createErrorObject(error.message));
+  }
 
-private handleOtherError(error: Error, _req: Request, res: Response, _next: NextFunction) {
-    this.logger.error(error.message)
-    res 
-    .status(StatusCodes.INTERNAL_SERVER_ERROR)
-    .json(createErrorObject(error.message))
-}
+  private handleOtherError(error: Error, _req: Request, res: Response, _next: NextFunction) {
+    this.logger.error(error.message);
+    res
+      .status(StatusCodes.INTERNAL_SERVER_ERROR)
+      .json(createErrorObject(error.message));
+  }
 
-public catch(error: Error | HttpError, req: Request, res: Response, next: NextFunction):void {
-if (error instanceof HttpError) {
-    return this.handleHttpError(error,req,res,next)
-}
-
-this.handleOtherError(error,req,res,next)
+  public catch(error: Error | HttpError, req: Request, res: Response, next: NextFunction):void {
+    if (error instanceof HttpError) {
+      return this.handleHttpError(error,req,res,next);
     }
+
+    this.handleOtherError(error,req,res,next);
+  }
 }

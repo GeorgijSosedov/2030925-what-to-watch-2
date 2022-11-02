@@ -1,3 +1,1 @@
-export const getErrorMessage = (error: unknown):string => {
- return error instanceof Error ? error.message : ''
-}
+export const getErrorMessage = (error: unknown):string => error instanceof Error ? error.message : '';
