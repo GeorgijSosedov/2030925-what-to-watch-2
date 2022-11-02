@@ -16,3 +16,4 @@ export const Component = {
   UserController: Symbol.for('UserController'),
   CommentController: Symbol.for('CommentController')
 } as const;
+/*a*/
